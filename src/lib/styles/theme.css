@@ -1,13 +1,11 @@
-/* @import '@fontsource-variable/manrope'; */
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Lora:ital,wght@0,400..700;1,400..700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+@import '@fontsource/manrope';
+@import '@fontsource/libre-baskerville';
 
 :root {
 	--r-background-color: hsl(226 19% 13%);
-	/* --r-main-font: 'Manrope Variable'; */
 	--r-main-font: 'Libre Baskerville';
 	--r-main-font-size: 42px;
 	--r-main-color: hsl(226 19% 98%);
-	--r-heading-font: 'Libre Baskerville';
 	--r-code-font: 'Monaspace Neon';
 	--r-link-color: hsl(180 100% 50%);
 }

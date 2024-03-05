@@ -5,11 +5,11 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@fontsource-variable/jetbrains-mono':
+  '@fontsource/libre-baskerville':
+    specifier: ^5.0.12
+    version: 5.0.12
+  '@fontsource/manrope':
     specifier: ^5.0.19
-    version: 5.0.20
-  '@fontsource-variable/manrope':
-    specifier: ^5.0.18
     version: 5.0.19
   d3-interpolate:
     specifier: ^3.0.1
@@ -293,12 +293,12 @@ packages:
     dev: true
     optional: true
 
-  /@fontsource-variable/jetbrains-mono@5.0.20:
-    resolution: {integrity: sha512-IWJnmY9vT5Olcac1vzA7FMdnojCrZWMq+g7SqC2jsFpY0LQTjIgp9gBjjw9kUOkNbLw37/evZO4w6rdPeMA68A==}
+  /@fontsource/libre-baskerville@5.0.12:
+    resolution: {integrity: sha512-y+3d/p8lRlwQFKcjWxnEAsk0pYDEyy4Eda2CVq3TO0gYltcr4MpZl0X4UqrX6pjsMGhCwJPUZTbM2cm04YlNUg==}
     dev: false
 
-  /@fontsource-variable/manrope@5.0.19:
-    resolution: {integrity: sha512-1WQ1NFnS3tfZ+ZQ3nNJ6sQGpIr6RWhq/wTovlcTlmvVrd53lnmITSolq6vBSEgVef6DWNFUehEvodDcyL3O6EA==}
+  /@fontsource/manrope@5.0.19:
+    resolution: {integrity: sha512-5AbXsYyl9pwc60VnfWcWoq7gNggaByqINfD/hTBUrvqpm2AzZTqqpkQzfff3SMWR6mJIXQjBgrn/OzR9wPkcdg==}
     dev: false
 
   /@jridgewell/gen-mapping@0.3.3:
@@ -663,7 +663,7 @@ packages:
       normalize-path: 3.0.0
       readdirp: 3.6.0
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /code-red@1.0.4:
@@ -838,14 +838,6 @@ packages:
   /fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
     dev: true
-
-  /fsevents@2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
-    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
-    os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}

@@ -1,7 +1,6 @@
 {
 	"name": "animotion",
 	"private": true,
-	"version": "1.0.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
@@ -29,8 +28,8 @@
 		"vite": "^5.1.4"
 	},
 	"dependencies": {
-		"@fontsource-variable/jetbrains-mono": "^5.0.19",
-		"@fontsource-variable/manrope": "^5.0.18",
+		"@fontsource/libre-baskerville": "^5.0.12",
+		"@fontsource/manrope": "^5.0.19",
 		"d3-interpolate": "^3.0.1",
 		"reveal.js": "^5.0.4"
 	}

@@ -2,7 +2,11 @@
 const config = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
-		extend: {},
+		fontFamily: {
+			sans: ['Manrope Variable', 'sans-serif'],
+			serif: ['Libre Baskerville', 'serif'],
+			mono: ['Monaspace Neon', 'monospace'],
+		},
 	},
 	plugins: [],
 }
