@@ -29,38 +29,26 @@
 	<div class="w-max flex gap-8 mt-16 mx-auto">
 		<div style:opacity={$cardA.opacity}>
 			<div
-				class="card shadow w-[400px] h-[400px] bg-gray-700 grid place-items-center rounded"
+				class="card w-[400px] h-[400px] bg-gray-700 grid place-items-center rounded shadow-md"
 				style:scale={$cardA.scale}
 			/>
-			<p class="mt-12 text-3xl">{$textA}</p>
+			<p class="mt-12 text-3xl font-mono">{$textA}</p>
 		</div>
 
 		<div style:opacity={$cardB.opacity}>
 			<div
-				class="card shadow w-[400px] h-[400px] bg-gray-700 grid place-items-center rounded"
+				class="card w-[400px] h-[400px] bg-gray-600 grid place-items-center rounded shadow-md"
 				style:scale={$cardB.scale}
 			/>
-			<p class="mt-12 text-3xl">{$textB}</p>
+			<p class="mt-12 text-3xl font-mono">{$textB}</p>
 		</div>
 
 		<div style:opacity={$cardC.opacity}>
 			<div
-				class="card shadow w-[400px] h-[400px] bg-gray-700 grid place-items-center rounded"
+				class="card w-[400px] h-[400px] bg-gray-500 grid place-items-center rounded shadow-md"
 				style:scale={$cardC.scale}
 			/>
-			<p class="mt-12 text-3xl">{$textC}</p>
+			<p class="mt-12 text-3xl font-mono">{$textC}</p>
 		</div>
 	</div>
 </Slide>
-
-<style>
-	.card + p {
-		font-family: 'MonaSpace Neon';
-	}
-
-	.shadow {
-		box-shadow:
-			1px 1px 20px hsla(226 19% 0% / 20%),
-			1px 1px 40px hsla(226 19% 0% / 10%);
-	}
-</style>

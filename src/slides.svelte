@@ -11,7 +11,7 @@
 		{ duration: 2000 }
 	)
 
-	$options = { outline: true }
+	$options = { outline: false }
 </script>
 
 <Presentation>

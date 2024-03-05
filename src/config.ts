@@ -1,6 +1,5 @@
 import Markdown from 'reveal.js/plugin/markdown/markdown'
 import Highlight from 'reveal.js/plugin/highlight/highlight'
-import Math from 'reveal.js/plugin/math/math'
 import Notes from 'reveal.js/plugin/notes/notes'
 
 import { registerLanguages } from '@languages'
@@ -15,7 +14,7 @@ const options: Reveal.Options = {
 	minScale: 0.2,
 	maxScale: 2.0,
 	// plugins
-	plugins: [Markdown, Highlight, Math.KaTeX, Notes],
+	plugins: [Markdown, Highlight, Notes],
 	// syntax highlight options
 	highlight: {
 		// add new languages
