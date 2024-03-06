@@ -7,9 +7,15 @@
 	const cardB = signal({ opacity: 0, scale: 0 })
 	const cardC = signal({ opacity: 0, scale: 0 })
 
-	let textA = scrambler('first')
-	let textB = scrambler('second')
-	let textC = scrambler('third')
+	const textA = scrambler('first')
+	const textB = scrambler('second')
+	const textC = scrambler('third')
+
+	$: cardsWithText = [
+		{ card: $cardA, text: $textA },
+		{ card: $cardB, text: $textB },
+		{ card: $cardC, text: $textC },
+	]
 
 	async function showCards() {
 		textA.scramble()
@@ -27,28 +33,16 @@
 	<p class="font-bold text-6xl mt-8">🪄 Animotion</p>
 
 	<div class="w-max flex gap-8 mt-16 mx-auto">
-		<div style:opacity={$cardA.opacity}>
-			<div
-				class="card w-[400px] h-[400px] bg-gray-700 grid place-items-center rounded shadow-md"
-				style:scale={$cardA.scale}
-			/>
-			<p class="mt-12 text-3xl font-mono">{$textA}</p>
-		</div>
-
-		<div style:opacity={$cardB.opacity}>
-			<div
-				class="card w-[400px] h-[400px] bg-gray-600 grid place-items-center rounded shadow-md"
-				style:scale={$cardB.scale}
-			/>
-			<p class="mt-12 text-3xl font-mono">{$textB}</p>
-		</div>
-
-		<div style:opacity={$cardC.opacity}>
-			<div
-				class="card w-[400px] h-[400px] bg-gray-500 grid place-items-center rounded shadow-md"
-				style:scale={$cardC.scale}
-			/>
-			<p class="mt-12 text-3xl font-mono">{$textC}</p>
-		</div>
+		{#each cardsWithText as { card, text }}
+			<div style:opacity={card.opacity}>
+				<div
+					class="card w-[400px] h-[400px] bg-gray-700 grid place-items-center rounded shadow-md"
+					style:scale={card.scale}
+				/>
+				<p class="mt-12 text-3xl font-mono">
+					{text}
+				</p>
+			</div>
+		{/each}
 	</div>
 </Slide>
