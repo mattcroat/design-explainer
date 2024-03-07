@@ -35,7 +35,7 @@ export function signal<TweenValues>(
 	}
 
 	function sfx(this: any, sound: string, { volume = 0.5 } = {}) {
-		const audio = new Audio(sound)
+		const audio = new Audio(`${sound}.mp3`)
 		audio.volume = volume
 
 		tasks.push(async () => {

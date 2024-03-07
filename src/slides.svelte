@@ -5,6 +5,7 @@
 	import Intro from './slides/intro.svelte'
 	import Design from './slides/design.svelte'
 	import Utilitarian from './slides/utilitarian.svelte'
+	import Art from './slides/art.svelte'
 
 	$options = { outline: true }
 </script>
@@ -13,6 +14,7 @@
 	<Slide />
 	<Intro />
 	<Design />
+	<Art />
 	<Utilitarian />
 </Presentation>
 

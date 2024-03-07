@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Slide } from '@components'
 	import { signal } from '@motion'
-	import { scrambler } from '@extras'
+	import { scrambler, sfx } from '@extras'
 
 	const text = signal({ opacity: 1, y: 0 })
 	const visualMarker = signal({ w: 0, x: 0 })
@@ -27,7 +27,7 @@
 </script>
 
 <Slide on:in={intro} on:out={outro}>
-	<div class="h-full relative grid place-content-center font-mono text-8xl">
+	<div class="h-full relative grid place-content-center text-8xl">
 		<div
 			class="absolute top-[44.4%] left-[27.5%] h-[100px] origin-right bg-[yellow] mix-blend-difference z-10"
 			style:width="{$visualMarker.w}px"
@@ -38,9 +38,22 @@
 			style:width="{$designMarker.w}px"
 			style:scale="{$designMarker.x} 1"
 		/>
-		<p style:opacity={$text.opacity} style:translate="0px {$text.y}px">
-			{$visual}
-			{$design}
-		</p>
+		<div
+			class="flex gap-10 fancy"
+			style:opacity={$text.opacity}
+			style:translate="0px {$text.y}px"
+		>
+			<div class="flex">
+				{#each $visual.split('') as letter}
+					<span class="w-[60px]">{letter}</span>
+				{/each}
+			</div>
+
+			<div class="flex">
+				{#each $design.split('') as letter}
+					<span class="w-[60px]">{letter}</span>
+				{/each}
+			</div>
+		</div>
 	</div>
 </Slide>
