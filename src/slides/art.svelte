@@ -1,20 +1,22 @@
 <script lang="ts">
-	import { Slide, Step } from '@components'
+	import { Slide } from '@components'
 	import { signal } from '@motion'
+	import { sfx } from '@lib/extras'
 
 	const poster = signal({ opacity: 0, y: 1000 })
 	const marker1 = signal({ w: 0, h: 100, x: 36, y: 28 })
 	const marker2 = signal({ w: 0, h: 100, x: 36, y: 47 })
 
+	const markerSfx = sfx('marker')
+
 	async function useMarker() {
 		await poster.to({ opacity: 1, y: 0 })
 
-		await marker1
-			.sfx('marker')
-			.to({ w: 340, h: 100, x: 36, y: 28 }, { delay: 300 })
-		await marker2
-			.sfx('marker')
-			.to({ w: 440, h: 100, x: 36, y: 47 }, { delay: 300 })
+		markerSfx.play({ duration: 700 })
+		await marker1.to({ w: 340, h: 100, x: 36, y: 28 }, { delay: 300 })
+
+		markerSfx.play({ duration: 700 })
+		await marker2.to({ w: 440, h: 100, x: 36, y: 47 }, { delay: 300 })
 	}
 </script>
 

@@ -9,32 +9,20 @@ export function sfx(sound: string, defaults: Options = {}) {
 	function play(opts: Options = {}) {
 		const { vol = 0.5, duration = 1000 } = { ...defaults, ...opts }
 
-		audio.pause()
-		audio.currentTime = 0
 		audio.volume = vol
 		audio.play()
 
-		setTimeout(() => {
-			audio.pause()
-			audio.currentTime = 0
-		}, duration)
+		return new Promise((resolve, reject) => {
+			audio.onended = resolve
+			audio.onerror = reject
+
+			setTimeout(() => {
+				audio.pause()
+				audio.currentTime = 0
+				resolve('finished')
+			}, duration)
+		})
 	}
 
 	return { play }
 }
-
-// export function sfx(sound: string, { volume = 0.5, duration = 1000 } = {}) {
-// 	return new Promise((resolve, reject) => {
-// 		const audio = new Audio(`${sound}.mp3`)
-// 		audio.volume = volume
-// 		audio.onended = resolve
-// 		audio.onerror = reject
-// 		audio.play()
-
-// 		setTimeout(() => {
-// 			audio.pause()
-// 			audio.currentTime = 0
-// 			resolve('finished')
-// 		}, duration)
-// 	})
-// }

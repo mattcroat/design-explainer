@@ -11,6 +11,8 @@
 	const author2 = scrambler('Josef Müller-Brockmann (1955)')
 	const author3 = scrambler('Carlo Vivarelli (1958)')
 
+	const counterSfx = sfx('counter', { vol: 0.04, duration: 2000 })
+
 	$: posters = [
 		{
 			src: 'poster-1.jpg',
@@ -28,8 +30,6 @@
 			style: $poster3,
 		},
 	]
-
-	const counterSfx = sfx('counter', { vol: 0.1, duration: 2000 })
 
 	async function intro() {
 		await poster1.to({ opacity: 1, y: 0 })
