@@ -4,8 +4,8 @@
 	import { scrambler, sfx } from '@extras'
 
 	const text = signal({ opacity: 1, y: 0 })
-	const visualMarker = signal({ w: 0, x: 0 })
-	const designMarker = signal({ w: 0, x: 0 })
+	const marker1 = signal({ w: 0, x: 0 })
+	const marker2 = signal({ w: 0, x: 0 })
 
 	const visual = scrambler('visual')
 	const design = scrambler('design')
@@ -14,32 +14,32 @@
 		visual.scramble()
 		design.scramble({ duration: 4000 })
 		await text.to({ opacity: 1 })
-		await visualMarker.to({ w: 400, x: 1 })
-		await visualMarker.to({ x: 0 })
-		await designMarker.to({ w: 400, x: 1 })
-		await designMarker.to({ x: 0 })
+		await marker1.to({ w: 400, x: 1 })
+		await marker1.to({ x: 0 })
+		await marker2.to({ w: 400, x: 1 })
+		await marker2.to({ x: 0 })
 	}
 
 	async function outro() {
 		await text.to({ y: 1000 })
-		;[text, visualMarker, designMarker].forEach((store) => store.reset())
+		;[text, marker1, marker2].forEach((store) => store.reset())
 	}
 </script>
 
 <Slide on:in={intro} on:out={outro}>
-	<div class="h-full relative grid place-content-center text-8xl">
+	<div class="h-full relative grid place-content-center">
 		<div
-			class="absolute top-[44.4%] left-[27.5%] h-[100px] origin-right bg-[yellow] mix-blend-difference z-10"
-			style:width="{$visualMarker.w}px"
-			style:scale="{$visualMarker.x} 1"
+			class="absolute top-[44.4%] left-[27.5%] h-[120px] origin-right bg-[yellow] mix-blend-difference z-10"
+			style:width="{$marker1.w}px"
+			style:scale="{$marker1.x} 1"
 		/>
 		<div
-			class="absolute top-[44.4%] left-[50%] h-[100px] origin-right bg-[yellow] mix-blend-difference z-10"
-			style:width="{$designMarker.w}px"
-			style:scale="{$designMarker.x} 1"
+			class="absolute top-[44.4%] left-[50%] h-[120px] origin-right bg-[yellow] mix-blend-difference z-10"
+			style:width="{$marker2.w}px"
+			style:scale="{$marker2.x} 1"
 		/>
 		<div
-			class="flex gap-10 fancy"
+			class="flex gap-10 fancy text-8xl"
 			style:opacity={$text.opacity}
 			style:translate="0px {$text.y}px"
 		>
