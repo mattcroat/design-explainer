@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Slide } from '@components'
 	import { signal } from '@motion'
-	import { scrambler, sfx } from '@extras'
+	import { scrambler } from '@extras'
 
 	const text = signal({ opacity: 1, y: 0 })
 	const marker1 = signal({ w: 0, x: 0 })
@@ -22,22 +22,22 @@
 
 	async function outro() {
 		await text.to({ y: 1000 })
-		;[text, marker1, marker2].forEach((store) => store.reset())
 	}
 </script>
 
 <Slide on:in={intro} on:out={outro}>
 	<div class="h-full relative grid place-content-center">
 		<div
-			class="absolute top-[44.4%] left-[27.5%] h-[120px] origin-right bg-[yellow] mix-blend-difference z-10"
+			class="absolute top-[44.4%] left-[27.5%] h-[120px] origin-right bg-black mix-blend-overlay z-10"
 			style:width="{$marker1.w}px"
 			style:scale="{$marker1.x} 1"
 		/>
 		<div
-			class="absolute top-[44.4%] left-[50%] h-[120px] origin-right bg-[yellow] mix-blend-difference z-10"
+			class="absolute top-[44.4%] left-[50%] h-[120px] origin-right bg-black mix-blend-overlay z-10"
 			style:width="{$marker2.w}px"
 			style:scale="{$marker2.x} 1"
 		/>
+
 		<div
 			class="flex gap-10 fancy text-8xl"
 			style:opacity={$text.opacity}
