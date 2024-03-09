@@ -1,32 +1,37 @@
 <script lang="ts">
 	import { Slide, Step } from '@components'
-	import { signal } from '@motion'
+	import { all, signal } from '@motion'
 	import { scrambler, sfx } from '@lib/extras'
 
-	const viewBox = signal({ x: 0, y: 0, w: 1920, h: 1080 })
-	const transitionSfx = sfx('transition', { vol: 0.1 })
+	const viewBox = signal({ x: 0, y: 0, w: 960, h: 540 })
+	const text = signal({
+		contrast: 0,
+		repetition: 0,
+		alignment: 0,
+		proximity: 0,
+	})
 
 	const contrast = scrambler('Contrast')
 	const repetition = scrambler('Repetition')
 	const alignment = scrambler('Alignment')
 	const proximity = scrambler('Proximity')
 
+	const transitionSfx = sfx('transition', { vol: 0.1 })
+
 	async function intro() {
-		transitionSfx.play()
-		await viewBox.to({ x: 0, y: 0, w: 960, h: 540 })
-		await contrast.scramble()
+		await all(text.to({ contrast: 1 }), contrast.scramble())
 
 		transitionSfx.play()
 		await viewBox.to({ x: 960, y: 0, w: 960, h: 540 })
-		await repetition.scramble()
+		await all(text.to({ repetition: 1 }), repetition.scramble())
 
 		transitionSfx.play()
 		await viewBox.to({ x: 0, y: 540, w: 960, h: 540 })
-		await alignment.scramble()
+		await all(text.to({ alignment: 1 }), alignment.scramble())
 
 		transitionSfx.play()
 		await viewBox.to({ x: 960, y: 540, w: 960, h: 540 })
-		await proximity.scramble()
+		await all(text.to({ proximity: 1 }), proximity.scramble())
 
 		transitionSfx.play()
 		await viewBox.to({ x: 0, y: 0, w: 1920, h: 1080 })
@@ -35,8 +40,10 @@
 	async function outro() {}
 </script>
 
-<Slide on:in={intro}>
+<Slide>
 	<div class="absolute inset-0">
+		<Step on:in={intro} />
+
 		<svg viewBox="{$viewBox.x} {$viewBox.y} {$viewBox.w} {$viewBox.h}">
 			<!-- <rect x="0" y="0" width="960" height="540" fill="none" /> -->
 			<g>
@@ -58,6 +65,7 @@
 					text-anchor="middle"
 					dominant-baseline="middle"
 					class="font-mono text-2xl"
+					style:opacity={$text.contrast}
 				>
 					{$contrast}
 				</text>
@@ -85,6 +93,7 @@
 					text-anchor="middle"
 					dominant-baseline="middle"
 					class="font-mono text-2xl"
+					style:opacity={$text.repetition}
 				>
 					{$repetition}
 				</text>
@@ -112,6 +121,7 @@
 					text-anchor="middle"
 					dominant-baseline="middle"
 					class="font-mono text-2xl"
+					style:opacity={$text.alignment}
 				>
 					{$alignment}
 				</text>
@@ -140,6 +150,7 @@
 					text-anchor="middle"
 					dominant-baseline="middle"
 					class="font-mono text-2xl"
+					style:opacity={$text.proximity}
 				>
 					{$proximity}
 				</text>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Slide } from '@components'
+	import { Slide, Step } from '@components'
 	import { signal } from '@motion'
 	import { scrambler } from '@extras'
 
@@ -21,12 +21,15 @@
 	}
 
 	async function outro() {
-		await text.to({ y: 1000 })
+		await text.to({ opacity: 0, y: 400 })
 	}
 </script>
 
-<Slide on:in={intro} on:out={outro}>
+<Slide>
 	<div class="h-full relative grid place-content-center">
+		<Step on:in={intro} />
+		<Step on:in={outro} />
+
 		<div
 			class="absolute top-[44.4%] left-[27.5%] h-[120px] origin-right bg-black mix-blend-overlay z-10"
 			style:width="{$marker1.w}px"
