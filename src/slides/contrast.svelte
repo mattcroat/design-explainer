@@ -21,7 +21,7 @@
 	<Step on:in={async () => await example.to({ opacity: 0, y: 400 })} />
 
 	<div
-		class="h-full w-full grid grid-cols-2 inter text-left"
+		class="h-full w-full grid grid-cols-2 font-sans text-left"
 		style:translate="0px {$example.y}px"
 		style:opacity={$example.opacity}
 	>

@@ -8,6 +8,7 @@
 	import Utilitarian from './slides/utilitarian.svelte'
 	import Principles from './slides/principles.svelte'
 	import Contrast from './slides/contrast.svelte'
+	import TextColor from './slides/textColor.svelte'
 
 	$options = { outline: true }
 </script>
@@ -18,6 +19,7 @@
 	<Utilitarian />
 	<Principles />
 	<Contrast />
+	<TextColor />
 </Presentation>
 
 <!-- <style>
