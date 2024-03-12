@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { Slide, Step } from '@components'
 	import { signal } from '@motion'
 

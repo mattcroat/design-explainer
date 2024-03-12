@@ -9,6 +9,8 @@
 	import Principles from './slides/principles.svelte'
 	import Contrast from './slides/contrast.svelte'
 	import TextColor from './slides/textColor.svelte'
+	// import Repetition from './slides/repetition.svelte'
+	import Alignment from './slides/alignment.svelte'
 
 	$options = { outline: true }
 </script>
@@ -20,6 +22,8 @@
 	<Principles />
 	<Contrast />
 	<TextColor />
+	<!-- <Repetition /> -->
+	<Alignment />
 </Presentation>
 
 <!-- <style>
