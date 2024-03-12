@@ -11,6 +11,8 @@
 	import TextColor from './slides/textColor.svelte'
 	// import Repetition from './slides/repetition.svelte'
 	import Alignment from './slides/alignment.svelte'
+	// import Rules from './slides/rules.svelte'
+	import Proximity from './slides/proximity.svelte'
 
 	$options = { outline: true }
 </script>
@@ -24,6 +26,8 @@
 	<TextColor />
 	<!-- <Repetition /> -->
 	<Alignment />
+	<!-- <Rules /> -->
+	<Proximity />
 </Presentation>
 
 <!-- <style>
