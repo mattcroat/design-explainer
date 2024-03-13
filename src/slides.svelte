@@ -13,6 +13,9 @@
 	import Alignment from './slides/alignment.svelte'
 	// import Rules from './slides/rules.svelte'
 	import Proximity from './slides/proximity.svelte'
+	// import Layout from './slides/layout.svelte'
+	// import Spacing from './slides/spacing.svelte'
+	import Typography from './slides/typography.svelte'
 
 	$options = { outline: true }
 </script>
@@ -28,6 +31,9 @@
 	<Alignment />
 	<!-- <Rules /> -->
 	<Proximity />
+	<!-- <Layout /> -->
+	<!-- <Spacing /> -->
+	<Typography />
 </Presentation>
 
 <!-- <style>
