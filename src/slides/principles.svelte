@@ -141,7 +141,7 @@
 	{#if step === 'title'}
 		<div class="h-full grid place-items-center">
 			<div in:slide={{ duration: 1000, easing: cubicInOut }}>
-				<p class="text-6xl p-2 capitalize">Design principles</p>
+				<p class="p-2 font-mono text-6xl capitalize">Design principles</p>
 			</div>
 		</div>
 	{/if}
