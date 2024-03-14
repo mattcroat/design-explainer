@@ -9,7 +9,7 @@
 	import Principles from './slides/principles.svelte'
 	import Contrast from './slides/contrast.svelte'
 	import TextColor from './slides/textColor.svelte'
-	// import Repetition from './slides/repetition.svelte'
+	import Repetition from './slides/repetition.svelte'
 	import Alignment from './slides/alignment.svelte'
 	// import Rules from './slides/rules.svelte'
 	import Proximity from './slides/proximity.svelte'
@@ -22,13 +22,12 @@
 </script>
 
 <Presentation>
-	<!-- <Slide /> -->
 	<Intro />
 	<Utilitarian />
 	<Principles />
 	<Contrast />
 	<TextColor />
-	<!-- <Repetition /> -->
+	<Repetition />
 	<Alignment />
 	<!-- <Rules /> -->
 	<Proximity />
