@@ -36,6 +36,7 @@
 	<!-- <Spacing /> -->
 	<Typography />
 	<Color />
+	<Slide />
 </Presentation>
 
 <!-- <style>

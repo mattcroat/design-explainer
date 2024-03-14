@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { flip } from 'svelte/animate'
-	import { fade, fly, slide } from 'svelte/transition'
+	import { fade, fly, scale, slide } from 'svelte/transition'
 	import { cubicInOut, quadInOut } from 'svelte/easing'
 	import shuffle from 'just-shuffle'
 	import { Slide, Step } from '@components'
 	import { signal } from '@motion'
 
-	let step: 'start' | 'title' | 'palette' | 'wheel' | 'rule' = 'rule'
+	let step: 'start' | 'title' | 'palette' | 'wheel' | 'rule' = 'start'
 	let colors = [
 		{ value: '#05445E', name: 'Navy Blue', text: '#fff' },
 		{ value: '#189AB4', name: 'Blue Grotto', text: '#fff' },
@@ -16,10 +16,16 @@
 
 	const primary = signal({ x: 50, y: 50, opacity: 0 })
 	const secondary = signal({ x: 50, y: 50, opacity: 0 })
-	const opacity = signal(0)
+	const rule = signal({
+		background: 'hsl(0 0% 10%)',
+		button: 'hsl(0 0% 100%)',
+		opacity: 0,
+	})
 
 	// setTimeout(async () => {
-	// 	step = 'rule'
+	// 	await rule.to({ scale: 1 })
+	// 	await rule.to({ background: 'hsl(240 100% 47%)' })
+	// 	await rule.to({ button: 'hsl(60 100% 47%)' })
 	// }, 2000)
 </script>
 
@@ -39,11 +45,18 @@
 	/>
 	<Step on:in={() => (step = 'wheel')} />
 	<Step
-		on:in={async () => {
-			await primary.to({ x: 10, y: 68 }).to({ opacity: 1 })
-			await secondary.to({ x: 90, y: 28 }).to({ opacity: 1 })
-		}}
+		on:in={async () => await primary.to({ x: 10, y: 68 }).to({ opacity: 1 })}
 	/>
+	<Step
+		on:in={async () => await secondary.to({ x: 90, y: 28 }).to({ opacity: 1 })}
+	/>
+	<Step on:in={() => (step = 'rule')} />
+	<Step on:in={async () => await rule.to({ opacity: 1 })} />
+	<Step on:in={async () => await rule.to({ opacity: 0 })} />
+	<Step
+		on:in={async () => await rule.to({ background: 'hsl(240 100% 47%)' })}
+	/>
+	<Step on:in={async () => await rule.to({ button: 'hsl(60 100% 47%)' })} />
 
 	{#if step === 'title'}
 		<div class="h-full grid place-items-center">
@@ -77,7 +90,8 @@
 
 	{#if step === 'wheel'}
 		<div
-			in:fly={{ y: 1000, duration: 800, delay: 800 }}
+			in:scale={{ duration: 800, delay: 800 }}
+			out:scale={{ duration: 800, delay: 0 }}
 			class="h-full grid place-content-center"
 		>
 			<div class="relative color-wheel w-[500px] h-[500px] rounded-full">
@@ -91,7 +105,7 @@
 						class="w-max absolute top-[30px] left-1/2 -translate-x-1/2 font-mono text-2xl"
 						style:opacity={$primary.opacity}
 					>
-						hsl(240, 100%, 47%)
+						hsl(240 100% 47%)
 					</p>
 				</div>
 				<div
@@ -104,7 +118,7 @@
 						class="w-max absolute top-[20px] left-1/2 -translate-x-1/2 font-mono text-2xl"
 						style:opacity={$secondary.opacity}
 					>
-						hsl(60, 100%, 47%)
+						hsl(60 100% 47%)
 					</p>
 				</div>
 			</div>
@@ -112,7 +126,52 @@
 	{/if}
 
 	{#if step === 'rule'}
-		<h1>rule</h1>
+		<div
+			in:scale={{ duration: 800, delay: 800 }}
+			class="relative h-full grid place-content-center"
+			style:background-color={$rule.background}
+		>
+			<div>
+				<p class="font-sans text-8xl text-white font-black uppercase">
+					Less than 50%<br />are subscribed
+				</p>
+				<button
+					class="w-max mx-auto mt-16 px-8 py-4 text-3xl font-sans font-bold text-black capitalize rounded-full shadow-lg"
+					style:background-color={$rule.button}
+				>
+					Subscribe
+				</button>
+			</div>
+
+			<div
+				class="absolute inset-0"
+				style:background-color="hsl(0 0% 10%)"
+				style:opacity={$rule.opacity}
+			>
+				<div
+					class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex mx-auto font-sans font-semibold"
+				>
+					<div
+						class="w-[140px] h-[140px] grid place-content-center -mr-4 rounded-full z-30"
+						style:background-color="hsl(240 100% 47%)"
+					>
+						60%
+					</div>
+					<div
+						class="w-[140px] h-[140px] grid place-content-center -mr-4 text-black rounded-full z-20"
+						style:background-color=" hsl(0 0% 100%)"
+					>
+						30%
+					</div>
+					<div
+						class="w-[140px] h-[140px] grid place-content-center text-black rounded-full z-10"
+						style:background-color=" hsl(60 100% 47%) "
+					>
+						10%
+					</div>
+				</div>
+			</div>
+		</div>
 	{/if}
 </Slide>
 
