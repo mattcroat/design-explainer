@@ -1,21 +1,37 @@
 <script lang="ts">
+	import { slide } from 'svelte/transition'
+	import { cubicInOut } from 'svelte/easing'
 	import { Slide, Step } from '@components'
 	import { signal } from '@motion'
 
+	let step: 'start' | 'title' | 'no proximity' | 'none' | 'proximity' = 'none'
+
 	const example = signal({ y: 800, opacity: 0 })
 	const postedMargin = signal({ top: 0, bottom: 0 })
-
-	let state: 'none' | 'no proximity' | 'proximity' = 'none'
 </script>
 
 <Slide>
-	<Step on:in={async () => await example.to({ y: 0, opacity: 1 })} />
+	<Step on:in={() => (step = 'title')} />
+	<Step
+		on:in={async () => {
+			step = 'none'
+			await example.to({ y: 0, opacity: 1 })
+		}}
+	/>
 	<Step on:in={async () => await postedMargin.to({ top: 24, bottom: 24 })} />
-	<Step on:in={async () => (state = 'no proximity')} />
-	<Step on:in={async () => (state = 'none')} />
+	<Step on:in={async () => (step = 'no proximity')} />
+	<Step on:in={async () => (step = 'none')} />
 	<Step on:in={async () => await postedMargin.to({ top: 8, bottom: 24 })} />
-	<Step on:in={() => (state = 'proximity')} />
-	<Step on:in={async () => await example.to({ y: -800, opacity: 0 })} />
+	<Step on:in={() => (step = 'proximity')} />
+	<Step on:in={async () => await example.to({ y: 800, opacity: 0 })} />
+
+	{#if step === 'title'}
+		<div class="h-full grid place-items-center">
+			<div in:slide={{ duration: 1000, easing: cubicInOut }}>
+				<p class="text-6xl p-2 capitalize">Proximity</p>
+			</div>
+		</div>
+	{/if}
 
 	<div
 		class="h-full grid place-content-center font-sans text-left"
@@ -24,17 +40,17 @@
 	>
 		<div
 			class="outline-offset-[24px]"
-			style:outline="3px solid {state === 'proximity' ? 'aqua' : 'transparent'}"
+			style:outline="3px solid {step === 'proximity' ? 'aqua' : 'transparent'}"
 		>
 			<div
 				class="outline-offset-4"
-				style:outline="3px solid {state === 'proximity'
+				style:outline="3px solid {step === 'proximity'
 					? 'aqua'
 					: 'transparent'}"
 			>
 				<h1
 					class="text-[40px] font-[800] text-white capitalize outline-offset-4"
-					style:outline="3px solid {state === 'no proximity'
+					style:outline="3px solid {step === 'no proximity'
 						? 'aqua'
 						: 'transparent'}"
 				>
@@ -43,7 +59,7 @@
 				<p
 					class="text-[20px] text-[#b5b9c8] outline-offset-4"
 					style:margin="{$postedMargin.top}px 0px {$postedMargin.bottom}px 0px"
-					style:outline="3px solid {state === 'no proximity'
+					style:outline="3px solid {step === 'no proximity'
 						? 'aqua'
 						: 'transparent'}"
 				>
@@ -53,8 +69,8 @@
 
 			<div
 				class="max-w-[64ch] grid place-content-center space-y-8 text-[24px] text-[#dee4f6] leading-[1.6] outline-offset-4"
-				style:outline="3px solid {state === 'no proximity' ||
-				state === 'proximity'
+				style:outline="3px solid {step === 'no proximity' ||
+				step === 'proximity'
 					? 'aqua'
 					: 'transparent'}"
 			>

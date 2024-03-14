@@ -1,6 +1,10 @@
 <script lang="ts">
+	import { slide } from 'svelte/transition'
+	import { cubicInOut } from 'svelte/easing'
 	import { Slide, Step } from '@components'
 	import { signal } from '@motion'
+
+	let step: 'start' | 'title' | 'example' = 'start'
 
 	const example = signal({ opacity: 0, y: 400 })
 	const title = signal({ size: 24, weight: 400 })
@@ -10,7 +14,13 @@
 </script>
 
 <Slide>
-	<Step on:in={async () => await example.to({ opacity: 1, y: 0 })} />
+	<Step on:in={() => (step = 'title')} />
+	<Step
+		on:in={async () => {
+			step = 'example'
+			await example.to({ opacity: 1, y: 0 })
+		}}
+	/>
 	<Step on:in={async () => await opacity.to({ right: 1 })} />
 	<Step on:in={async () => await title.to({ size: 48 }).to({ weight: 800 })} />
 	<Step
@@ -19,6 +29,14 @@
 	<Step on:in={async () => await line.to(1.6)} />
 	<Step on:in={async () => await opacity.to({ left: 1 })} />
 	<Step on:in={async () => await example.to({ opacity: 0, y: 400 })} />
+
+	{#if step === 'title'}
+		<div class="h-full grid place-items-center">
+			<div in:slide={{ duration: 1000, easing: cubicInOut }}>
+				<p class="text-6xl p-2 capitalize">Contrast</p>
+			</div>
+		</div>
+	{/if}
 
 	<div
 		class="h-full w-full grid grid-cols-2 font-sans text-left"

@@ -21,12 +21,6 @@
 		button: 'hsl(0 0% 100%)',
 		opacity: 0,
 	})
-
-	// setTimeout(async () => {
-	// 	await rule.to({ scale: 1 })
-	// 	await rule.to({ background: 'hsl(240 100% 47%)' })
-	// 	await rule.to({ button: 'hsl(60 100% 47%)' })
-	// }, 2000)
 </script>
 
 <Slide>

@@ -2,53 +2,51 @@
 	import { Slide, Step } from '@components'
 	import { signal } from '@motion'
 	import { Marker, Position, scrambler, sfx } from '@lib/extras'
+	import { fly } from 'svelte/transition'
+	import { quadInOut } from 'svelte/easing'
 
-	const image = signal({ opacity: 0, x: 50, y: 100 })
-	const text = scrambler('The Joy of Painting (1983)')
+	let step: 'start' | 'design' | 'definition' | 'end' = 'start'
 
-	const poster = signal({ opacity: 0, x: 50, y: 100 })
-	const marker = signal({ opacity: 0, x: 20, y: 51, w: 0, h: 40 })
-
+	const marker = signal({ opacity: 0, x: 14, y: 51, w: 0, h: 60 })
 	const markerSfx = sfx('marker')
-	const scrambleSfx = sfx('counter')
-
-	async function intro() {
-		await image.to({ opacity: 1, y: 50 })
-		scrambleSfx.play({ vol: 0.01, duration: 2000 })
-		await text.scramble()
-		await image.to({ opacity: 0, y: 100 }, { delay: 4000 })
-
-		await poster.to({ opacity: 1, y: 50 })
-		markerSfx.play()
-		await marker.to({ opacity: 1, w: 1010 })
-	}
-
-	async function outro() {
-		await marker.to({ opacity: 0 }, { duration: 0 })
-		await poster.to({ opacity: 0, y: 200 })
-	}
 </script>
 
 <Slide>
-	<div class="relative h-full w-full">
-		<Step on:in={intro} />
-		<Step on:in={outro} />
+	<Step on:in={async () => (step = 'design')} />
+	<Step on:in={async () => (step = 'definition')} />
+	<Step
+		on:in={async () => {
+			markerSfx.play()
+			await marker.to({ w: 1230, opacity: 1 })
+		}}
+	/>
+	<Step
+		on:in={async () => {
+			await marker.to({ opacity: 0 }, { duration: 0 })
+			step = 'end'
+		}}
+	/>
 
-		<Marker markers={[$marker]} />
+	{#if step === 'design'}
+		<img
+			transition:fly={{ y: 1000, duration: 1000, easing: quadInOut }}
+			class="w-[1500px] block mx-auto rounded shadow-md"
+			src="linear.png"
+			alt="linear"
+		/>
+	{/if}
 
-		<Position props={image}>
+	{#if step === 'definition'}
+		<div class="relative h-full w-full grid place-content-center">
+			<Marker markers={[$marker]} />
+
 			<img
-				class="w-[800px] block rounded-2xl shadow-lg"
-				src="bob-ross.gif"
-				alt="joy of painting"
+				in:fly={{ y: 1000, duration: 1000, delay: 1000, easing: quadInOut }}
+				out:fly={{ y: 1000, duration: 1000, easing: quadInOut }}
+				class="w-[1500px] block mx-auto rounded shadow-md"
+				src="utilitarian.png"
+				alt="definition"
 			/>
-			<p class="mt-8 font-mono text-2xl">{$text}</p>
-		</Position>
-
-		<Position props={poster}>
-			<div class=" w-[1200px] rounded shadow-md overflow-hidden">
-				<img class="w-full" src="utilitarian.png" alt="poster" />
-			</div>
-		</Position>
-	</div>
+		</div>
+	{/if}
 </Slide>

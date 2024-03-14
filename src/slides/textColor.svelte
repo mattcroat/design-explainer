@@ -1,7 +1,11 @@
 <script lang="ts">
+	import { slide } from 'svelte/transition'
+	import { cubicInOut } from 'svelte/easing'
 	import * as d3 from 'd3-interpolate'
 	import { Slide, Step } from '@components'
 	import { all, signal } from '@motion'
+
+	let step: 'start' | 'title' | 'example' = 'start'
 
 	const content = signal({ opacity: 0, y: 1000 })
 	const color = signal({ bg: '#171717', text: '#fff' })
@@ -26,7 +30,13 @@
 </script>
 
 <Slide>
-	<Step on:in={async () => await content.to({ opacity: 1, y: 0 })} />
+	<Step on:in={() => (step = 'title')} />
+	<Step
+		on:in={async () => {
+			step = 'example'
+			await content.to({ opacity: 1, y: 0 })
+		}}
+	/>
 	<Step on:in={async () => await color.to({ text: '#afafaf' })} />
 	<Step
 		on:in={async () => await color.to({ text: '#eeeeee', bg: '#5affff' })}
@@ -50,6 +60,14 @@
 		}}
 	/>
 	<Step on:in={async () => await content.to({ opacity: 0, y: -1000 })} />
+
+	{#if step === 'title'}
+		<div class="h-full grid place-items-center">
+			<div in:slide={{ duration: 1000, easing: cubicInOut }}>
+				<p class="text-6xl p-2 capitalize">Text Contrast</p>
+			</div>
+		</div>
+	{/if}
 
 	<div
 		class="relative h-full w-full"

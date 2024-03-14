@@ -1,7 +1,18 @@
 <script lang="ts">
+	import { slide } from 'svelte/transition'
+	import { cubicInOut } from 'svelte/easing'
 	import { Slide, Step } from '@components'
 	import { all, signal } from '@motion'
 	import { scrambler, sfx } from '@lib/extras'
+
+	let step:
+		| 'start'
+		| 'title'
+		| 'contrast'
+		| 'repetition'
+		| 'alignment'
+		| 'proximity'
+		| 'end' = 'start'
 
 	const viewBox = signal({ x: 0, y: 0, w: 960, h: 540 })
 	const example1 = signal({ opacity: 0, cx1: 0 })
@@ -50,70 +61,93 @@
 	const text4 = scrambler('proximity')
 
 	const transitionSfx = sfx('transition', { vol: 0.1 })
-
-	async function intro() {
-		await example1.to({ opacity: 1 }).to({ cx1: 80 })
-		await all(opacity.to({ contrast: 1 }), text1.scramble())
-
-		transitionSfx.play()
-		await viewBox.to({ x: 960, y: 0, w: 960, h: 540 })
-		await example2
-			.to({ opacity: 1 })
-			.to({ cx1: 0, cx2: 80, cx3: 160, cx4: 240 })
-		await all(opacity.to({ repetition: 1 }), text2.scramble())
-
-		transitionSfx.play()
-		await viewBox.to({ x: 0, y: 540, w: 960, h: 540 })
-		await example3.to({
-			opacity: 1,
-			h1: 170,
-			w2: 120,
-			w3: 140,
-			w4: 100,
-			w5: 120,
-			w6: 60,
-			w7: 52,
-			w8: 100,
-		})
-		await all(opacity.to({ alignment: 1 }), text3.scramble())
-
-		transitionSfx.play()
-		await viewBox.to({ x: 960, y: 540, w: 960, h: 540 })
-		await example4.to({
-			cx1: 130,
-			cy1: 130,
-			cx2: 40,
-			cy2: 40,
-			cx3: 130,
-			cy3: 40,
-			cx4: 220,
-			cy4: 40,
-			cx5: 40,
-			cy5: 130,
-			cx6: 220,
-			cy6: 130,
-			cx7: 40,
-			cy7: 220,
-			cx8: 130,
-			cy8: 220,
-			cx9: 220,
-			cy9: 220,
-		})
-		await all(opacity.to({ proximity: 1 }), text4.scramble())
-
-		transitionSfx.play()
-		await viewBox.to({ x: 0, y: 0, w: 1920, h: 1080 })
-	}
-
-	async function outro() {}
 </script>
 
 <Slide>
-	<div class="absolute inset-0">
-		<Step on:in={intro} />
+	<Step on:in={() => (step = 'title')} />
+	<Step
+		on:in={async () => {
+			step = 'contrast'
+			await example1.to({ opacity: 1 }).to({ cx1: 80 })
+			await all(opacity.to({ contrast: 1 }), text1.scramble())
+		}}
+	/>
+	<Step
+		on:in={async () => {
+			step = 'repetition'
+			transitionSfx.play()
+			await viewBox.to({ x: 960, y: 0, w: 960, h: 540 })
+			await example2
+				.to({ opacity: 1 })
+				.to({ cx1: 0, cx2: 80, cx3: 160, cx4: 240 })
+			await all(opacity.to({ repetition: 1 }), text2.scramble())
+		}}
+	/>
+	<Step
+		on:in={async () => {
+			step = 'alignment'
+			transitionSfx.play()
+			await viewBox.to({ x: 0, y: 540, w: 960, h: 540 })
+			await example3.to({
+				opacity: 1,
+				h1: 170,
+				w2: 120,
+				w3: 140,
+				w4: 100,
+				w5: 120,
+				w6: 60,
+				w7: 52,
+				w8: 100,
+			})
+			await all(opacity.to({ alignment: 1 }), text3.scramble())
+		}}
+	/>
+	<Step
+		on:in={async () => {
+			step = 'proximity'
+			transitionSfx.play()
+			await viewBox.to({ x: 960, y: 540, w: 960, h: 540 })
+			await example4.to({
+				cx1: 130,
+				cy1: 130,
+				cx2: 40,
+				cy2: 40,
+				cx3: 130,
+				cy3: 40,
+				cx4: 220,
+				cy4: 40,
+				cx5: 40,
+				cy5: 130,
+				cx6: 220,
+				cy6: 130,
+				cx7: 40,
+				cy7: 220,
+				cx8: 130,
+				cy8: 220,
+				cx9: 220,
+				cy9: 220,
+			})
+			await all(opacity.to({ proximity: 1 }), text4.scramble())
+		}}
+	/>
+	<Step
+		on:in={async () => {
+			step = 'end'
+			transitionSfx.play()
+			await viewBox.to({ x: 0, y: 0, w: 1920, h: 1080 })
+		}}
+	/>
 
+	{#if step === 'title'}
+		<div class="h-full grid place-items-center">
+			<div in:slide={{ duration: 1000, easing: cubicInOut }}>
+				<p class="text-6xl p-2 capitalize">Design principles</p>
+			</div>
+		</div>
+	{/if}
+
+	<div class="absolute inset-0">
 		<svg viewBox="{$viewBox.x} {$viewBox.y} {$viewBox.w} {$viewBox.h}">
-			<!-- <rect x="0" y="0" width="960" height="540" fill="none" /> -->
 			<g>
 				<g transform="translate(440 240)" style:opacity={$example1.opacity}>
 					<circle cx={$example1.cx1} cy="0" r="80" fill="yellow" />
@@ -139,7 +173,6 @@
 				</text>
 			</g>
 
-			<!-- <rect x="960" y="0" width="960" height="540" fill="lightgreen" /> -->
 			<g>
 				<g transform="translate(1320 240)" opacity={$example2.opacity}>
 					<circle
@@ -189,7 +222,6 @@
 				</text>
 			</g>
 
-			<!-- <rect x="0" y="540" width="960" height="540" fill="lightyellow" /> -->
 			<g>
 				<g transform="translate(420 700)" opacity={$example3.opacity}>
 					<rect
@@ -273,7 +305,6 @@
 				</text>
 			</g>
 
-			<!-- <rect x="960" y="540" width="960" height="540" fill="lightpink" /> -->
 			<g>
 				<g transform="translate(1310 660)">
 					<circle cx={$example4.cx9} cy={$example4.cy9} r="40" fill="aqua" />

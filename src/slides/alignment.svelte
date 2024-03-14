@@ -1,6 +1,10 @@
 <script lang="ts">
+	import { slide } from 'svelte/transition'
+	import { cubicInOut } from 'svelte/easing'
 	import { Slide, Step } from '@components'
 	import { all, signal } from '@motion'
+
+	let step: 'start' | 'title' | 'example' = 'start'
 
 	const layout = signal({ y: 400, opacity: 0 })
 	const grid = signal({ opacity: 0 })
@@ -14,7 +18,13 @@
 </script>
 
 <Slide>
-	<Step on:in={async () => await layout.to({ y: 0, opacity: 1 })} />
+	<Step on:in={() => (step = 'title')} />
+	<Step
+		on:in={async () => {
+			step = 'example'
+			await layout.to({ y: 0, opacity: 1 })
+		}}
+	/>
 	<Step on:in={async () => await grid.to({ opacity: 1 })} />
 	<Step
 		on:in={async () => {
@@ -37,6 +47,14 @@
 			await layout.to({ y: 400, opacity: 0 })
 		}}
 	/>
+
+	{#if step === 'title'}
+		<div class="h-full grid place-items-center">
+			<div in:slide={{ duration: 1000, easing: cubicInOut }}>
+				<p class="text-6xl p-2 capitalize">Alignment</p>
+			</div>
+		</div>
+	{/if}
 
 	<div
 		class="absolute top-[84px] left-0 h-[2px] w-full bg-red-600 z-10"

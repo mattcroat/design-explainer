@@ -22,7 +22,7 @@
 </script>
 
 <Presentation>
-	<Slide />
+	<!-- <Slide /> -->
 	<Intro />
 	<Utilitarian />
 	<Principles />
