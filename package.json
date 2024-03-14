@@ -31,6 +31,7 @@
 		"@fontsource/libre-baskerville": "^5.0.12",
 		"@fontsource/manrope": "^5.0.19",
 		"d3-interpolate": "^3.0.1",
+		"just-shuffle": "^4.2.0",
 		"reveal.js": "^5.0.4"
 	}
 }

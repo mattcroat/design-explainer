@@ -1,39 +1,194 @@
 <script lang="ts">
-	import { fade, fly } from 'svelte/transition'
-	import { quadInOut } from 'svelte/easing'
-	import { Slide } from '@components'
 	import { flip } from 'svelte/animate'
+	import { fade, fly, slide } from 'svelte/transition'
+	import { cubicInOut, quadInOut } from 'svelte/easing'
+	import shuffle from 'just-shuffle'
+	import { Slide, Step } from '@components'
+	import { signal } from '@motion'
 
-	let colors = ['#f1fffa', '#ccfccb', '#96e6b3', '#568259', '#464e47']
-	let animate = false
+	let step: 'start' | 'title' | 'palette' | 'wheel' | 'rule' = 'rule'
+	let colors = [
+		{ value: '#05445E', name: 'Navy Blue', text: '#fff' },
+		{ value: '#189AB4', name: 'Blue Grotto', text: '#fff' },
+		{ value: '#75E6DA', name: 'Blue Green', text: '#000' },
+		{ value: '#D4F1F4', name: 'Baby Blue', text: '#000' },
+	]
 
-	setTimeout(() => {
-		animate = true
+	const primary = signal({ x: 50, y: 50, opacity: 0 })
+	const secondary = signal({ x: 50, y: 50, opacity: 0 })
+	const opacity = signal(0)
 
-		setInterval(() => {
-			colors = colors.sort(() => Math.random() - 0.5)
-		}, 1000)
-	}, 1000)
+	// setTimeout(async () => {
+	// 	step = 'rule'
+	// }, 2000)
 </script>
 
 <Slide>
-	{#if animate}
-		<div class="h-full grid grid-cols-5 font-mono text-2xl text-black">
+	<Step on:in={() => (step = 'title')} />
+	<Step on:in={() => (step = 'palette')} />
+	<Step
+		on:in={async () => {
+			const duration = 6000
+			const start = performance.now()
+			const interval = setInterval(() => {
+				let elapsed = performance.now() - start
+				colors = shuffle(colors, { shuffleAll: true })
+				elapsed > duration && clearInterval(interval)
+			}, 900)
+		}}
+	/>
+	<Step on:in={() => (step = 'wheel')} />
+	<Step
+		on:in={async () => {
+			await primary.to({ x: 10, y: 68 }).to({ opacity: 1 })
+			await secondary.to({ x: 90, y: 28 }).to({ opacity: 1 })
+		}}
+	/>
+
+	{#if step === 'title'}
+		<div class="h-full grid place-items-center">
+			<div in:slide={{ duration: 1000, easing: cubicInOut }}>
+				<p class="text-6xl p-2">Colors</p>
+			</div>
+		</div>
+	{/if}
+
+	{#if step === 'palette'}
+		<div class="h-full grid grid-cols-4 font-mono text-black">
 			{#each colors as color, i (color)}
 				<div
-					animate:flip={{ duration: 600, easing: quadInOut }}
-					in:fly|global={{ y: 400, duration: 800, delay: i * 300 }}
+					animate:flip={{ duration: 800, easing: quadInOut }}
+					transition:fly|global={{ y: 1000, duration: 800 }}
 					class="relative"
-					style:background-color={color}
+					style:background-color={color.value}
 				>
-					<span
+					<div
 						in:fade|global={{ delay: (i + 1) * 400 }}
-						class="absolute bottom-[40px] left-1/2 -translate-x-1/2"
+						class="max-w absolute bottom-[40px] left-1/2 -translate-x-1/2"
+						style:color={color.text}
 					>
-						{color}
-					</span>
+						<p class="text-3xl">{color.value.replace('#', '')}</p>
+						<p class="w-max mt-4 text-2xl">{color.name}</p>
+					</div>
 				</div>
 			{/each}
 		</div>
 	{/if}
+
+	{#if step === 'wheel'}
+		<div
+			in:fly={{ y: 1000, duration: 800, delay: 800 }}
+			class="h-full grid place-content-center"
+		>
+			<div class="relative color-wheel w-[500px] h-[500px] rounded-full">
+				<div
+					class="absolute w-[30px] h-[30px] border-4 border-[#fff] rounded-full"
+					style:top="{$primary.y}%"
+					style:left="{$primary.x}%"
+					style:translate="-50% -50%"
+				>
+					<p
+						class="w-max absolute top-[30px] left-1/2 -translate-x-1/2 font-mono text-2xl"
+						style:opacity={$primary.opacity}
+					>
+						hsl(240, 100%, 47%)
+					</p>
+				</div>
+				<div
+					class="absolute w-[20px] h-[20px] border-4 border-[#fff] rounded-full"
+					style:top="{$secondary.y}%"
+					style:left="{$secondary.x}%"
+					style:translate="-50% -50%"
+				>
+					<p
+						class="w-max absolute top-[20px] left-1/2 -translate-x-1/2 font-mono text-2xl"
+						style:opacity={$secondary.opacity}
+					>
+						hsl(60, 100%, 47%)
+					</p>
+				</div>
+			</div>
+		</div>
+	{/if}
+
+	{#if step === 'rule'}
+		<h1>rule</h1>
+	{/if}
 </Slide>
+
+<style>
+	.color-wheel {
+		background-image: radial-gradient(
+				circle at 50% 0,
+				red,
+				rgba(242, 13, 13, 0.8) 10%,
+				rgba(230, 26, 26, 0.6) 20%,
+				rgba(204, 51, 51, 0.4) 30%,
+				rgba(166, 89, 89, 0.2) 40%,
+				hsla(0, 0%, 50%, 0) 50%
+			),
+			radial-gradient(
+				circle at 85.35533905932738% 14.644660940672622%,
+				#ffbf00,
+				rgba(242, 185, 13, 0.8) 10%,
+				rgba(230, 179, 26, 0.6) 20%,
+				rgba(204, 166, 51, 0.4) 30%,
+				rgba(166, 147, 89, 0.2) 40%,
+				hsla(0, 0%, 50%, 0) 50%
+			),
+			radial-gradient(
+				circle at 100% 50%,
+				#80ff00,
+				rgba(128, 242, 13, 0.8) 10%,
+				rgba(128, 230, 26, 0.6) 20%,
+				rgba(128, 204, 51, 0.4) 30%,
+				rgba(128, 166, 89, 0.2) 40%,
+				hsla(0, 0%, 50%, 0) 50%
+			),
+			radial-gradient(
+				circle at 85.35533905932738% 85.35533905932738%,
+				#00ff40,
+				rgba(13, 242, 70, 0.8) 10%,
+				rgba(26, 230, 77, 0.6) 20%,
+				rgba(51, 204, 89, 0.4) 30%,
+				rgba(89, 166, 108, 0.2) 40%,
+				hsla(0, 0%, 50%, 0) 50%
+			),
+			radial-gradient(
+				circle at 50.00000000000001% 100%,
+				#0ff,
+				rgba(13, 242, 242, 0.8) 10%,
+				rgba(26, 230, 230, 0.6) 20%,
+				rgba(51, 204, 204, 0.4) 30%,
+				rgba(89, 166, 166, 0.2) 40%,
+				hsla(0, 0%, 50%, 0) 50%
+			),
+			radial-gradient(
+				circle at 14.64466094067263% 85.35533905932738%,
+				#0040ff,
+				rgba(13, 70, 242, 0.8) 10%,
+				rgba(26, 77, 230, 0.6) 20%,
+				rgba(51, 89, 204, 0.4) 30%,
+				rgba(89, 108, 166, 0.2) 40%,
+				hsla(0, 0%, 50%, 0) 50%
+			),
+			radial-gradient(
+				circle at 0 50.00000000000001%,
+				#7f00ff,
+				rgba(128, 13, 242, 0.8) 10%,
+				rgba(128, 26, 230, 0.6) 20%,
+				rgba(128, 51, 204, 0.4) 30%,
+				rgba(128, 89, 166, 0.2) 40%,
+				hsla(0, 0%, 50%, 0) 50%
+			),
+			radial-gradient(
+				circle at 14.644660940672615% 14.64466094067263%,
+				#ff00bf,
+				rgba(242, 13, 185, 0.8) 10%,
+				rgba(230, 26, 179, 0.6) 20%,
+				rgba(204, 51, 166, 0.4) 30%,
+				rgba(166, 89, 147, 0.2) 40%,
+				hsla(0, 0%, 50%, 0) 50%
+			);
+	}
+</style>
