@@ -13,7 +13,6 @@
 	import Alignment from './slides/alignment.svelte'
 	// import Rules from './slides/rules.svelte'
 	import Proximity from './slides/proximity.svelte'
-	// import Spacing from './slides/spacing.svelte'
 	import Typography from './slides/typography.svelte'
 	import Color from './slides/color.svelte'
 	import Layout from './slides/layout.svelte'
@@ -33,7 +32,6 @@
 	<Alignment />
 	<!-- <Rules /> -->
 	<Proximity />
-	<!-- <Spacing /> -->
 	<Typography />
 	<Color />
 	<Layout />

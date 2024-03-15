@@ -65,15 +65,17 @@
 				<p class="text-9xl font-serif">serif</p>
 
 				{#if step === 'typeface.serifs'}
-					<div
-						class="absolute top-[78px] left-[-6px] aspect-square w-[40px] border-4 border-red-400 rounded-full"
-					/>
-					<div
-						class="absolute top-[28px] left-[128px] aspect-square w-[40px] border-4 border-red-400 rounded-full"
-					/>
-					<div
-						class="absolute top-[-10px] left-[270px] aspect-square w-[40px] border-4 border-red-400 rounded-full"
-					/>
+					<div transition:fade>
+						<div
+							class="absolute top-[78px] left-[-6px] aspect-square w-[40px] border-4 border-red-400 rounded-full"
+						/>
+						<div
+							class="absolute top-[28px] left-[128px] aspect-square w-[40px] border-4 border-red-400 rounded-full"
+						/>
+						<div
+							class="absolute top-[-10px] left-[270px] aspect-square w-[40px] border-4 border-red-400 rounded-full"
+						/>
+					</div>
 				{/if}
 			</div>
 		{/if}
