@@ -3,8 +3,8 @@
 	import { options } from '@layout'
 
 	import Intro from './slides/intro.svelte'
-	// import Design from './slides/design.svelte'
-	// import Art from './slides/art.svelte'
+	import Design from './slides/design.svelte'
+	import Art from './slides/art.svelte'
 	import Utilitarian from './slides/utilitarian.svelte'
 	import Principles from './slides/principles.svelte'
 	import Contrast from './slides/contrast.svelte'
@@ -24,6 +24,7 @@
 
 <Presentation>
 	<Intro />
+	<Design />
 	<Utilitarian />
 	<Principles />
 	<Contrast />

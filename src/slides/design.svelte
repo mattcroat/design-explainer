@@ -11,7 +11,7 @@
 	const author2 = scrambler('Josef Müller-Brockmann (1955)')
 	const author3 = scrambler('Carlo Vivarelli (1958)')
 
-	const counterSfx = sfx('counter', { vol: 0.04, duration: 2000 })
+	const counterSfx = sfx('counter', { vol: 0.01, duration: 2000 })
 
 	$: posters = [
 		{
@@ -41,8 +41,8 @@
 		await author2.scramble()
 
 		await all(
-			poster1.to({ opacity: 0, l: -200 }, { duration: 400, delay: 1000 }),
-			poster2.to({ opacity: 0, r: -200 }, { duration: 400, delay: 1000 })
+			poster1.to({ opacity: 0, l: -200 }, { duration: 800, delay: 1000 }),
+			poster2.to({ opacity: 0, r: -200 }, { duration: 800, delay: 1000 })
 		)
 
 		await poster3.to({ opacity: 1, t: 50 })
