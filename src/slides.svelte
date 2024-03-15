@@ -11,7 +11,7 @@
 	import Text from './slides/text.svelte'
 	import Repetition from './slides/repetition.svelte'
 	import Alignment from './slides/alignment.svelte'
-	// import Rules from './slides/rules.svelte'
+	import Rules from './slides/rules.svelte'
 	import Proximity from './slides/proximity.svelte'
 	import Typography from './slides/typography.svelte'
 	import Color from './slides/color.svelte'
@@ -30,7 +30,7 @@
 	<Text />
 	<Repetition />
 	<Alignment />
-	<!-- <Rules /> -->
+	<Rules />
 	<Proximity />
 	<Typography />
 	<Color />
