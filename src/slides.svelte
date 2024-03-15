@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Presentation, Slide } from '@components'
+	import { Presentation } from '@components'
 	import { options } from '@layout'
 
 	import Intro from './slides/intro.svelte'
@@ -13,7 +13,6 @@
 	import Alignment from './slides/alignment.svelte'
 	// import Rules from './slides/rules.svelte'
 	import Proximity from './slides/proximity.svelte'
-	// import Layout from './slides/layout.svelte'
 	// import Spacing from './slides/spacing.svelte'
 	import Typography from './slides/typography.svelte'
 	import Color from './slides/color.svelte'
@@ -34,7 +33,6 @@
 	<Alignment />
 	<!-- <Rules /> -->
 	<Proximity />
-	<!-- <Layout /> -->
 	<!-- <Spacing /> -->
 	<Typography />
 	<Color />

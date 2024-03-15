@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { slide } from 'svelte/transition'
+	import { fade, slide } from 'svelte/transition'
 	import { cubicInOut } from 'svelte/easing'
 	import { Slide, Step } from '@components'
 	import { all, signal } from '@motion'
 
-	let step: 'start' | 'title' | 'example' = 'start'
+	let step: 'start' | 'title' | 'example' | 'spacing' = 'start'
 
 	const layout = signal({ y: 400, opacity: 0 })
 	const grid = signal({ opacity: 0 })
@@ -39,11 +39,17 @@
 	<Step
 		on:in={async () => {
 			await all(
+				grid.to({ opacity: 0 }),
 				horizontal.to({ opacity: 0 }),
 				vertical.to({ opacity: 0 }),
 				middle.to({ opacity: 0 })
 			)
-			await grid.to({ opacity: 0 })
+		}}
+	/>
+	<Step on:in={() => (step = 'spacing')} />
+	<Step
+		on:in={async () => {
+			step = 'start'
 			await layout.to({ y: 400, opacity: 0 })
 		}}
 	/>
@@ -53,6 +59,26 @@
 			<div in:slide={{ duration: 1000, easing: cubicInOut }}>
 				<p class="p-2 font-mono text-6xl capitalize">Alignment</p>
 			</div>
+		</div>
+	{/if}
+
+	{#if step === 'spacing'}
+		<div in:fade>
+			<div
+				class="absolute top-[90px] left-[104px] w-[450px] h-[120px] bg-red-600 rounded"
+			/>
+			<div
+				class="absolute top-[414px] left-[900px] w-[120px] h-[120px] bg-red-600 rounded"
+			/>
+			<div
+				class="absolute top-[54px] right-[170px] w-[40px] h-[40px] bg-red-600"
+			/>
+			<div
+				class="absolute top-[660px] left-[635px] w-[40px] h-[40px] bg-red-600"
+			/>
+			<div
+				class="absolute top-[660px] right-[635px] w-[40px] h-[40px] bg-red-600"
+			/>
 		</div>
 	{/if}
 
@@ -81,7 +107,7 @@
 		>
 			<nav class="flex justify-between">
 				<span class="text-[24px] font-black uppercase">Joy</span>
-				<ul class="flex gap-4 text-[20px] font-semibold">
+				<ul class="flex gap-10 text-[20px] font-semibold">
 					<li>Articles</li>
 					<li>Newsletter</li>
 				</ul>
@@ -144,7 +170,7 @@
 			style:opacity={$grid.opacity}
 		>
 			{#each { length: 12 } as _}
-				<div class="bg-gray-600" />
+				<div class="bg-gray-800" />
 			{/each}
 		</div>
 	</div>
