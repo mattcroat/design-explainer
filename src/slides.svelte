@@ -18,6 +18,7 @@
 	import Typography from './slides/typography.svelte'
 	import Color from './slides/color.svelte'
 	import Layout from './slides/layout.svelte'
+	import Books from './slides/books.svelte'
 
 	$options = { outline: true }
 </script>
@@ -37,6 +38,7 @@
 	<Typography />
 	<Color />
 	<Layout />
+	<Books />
 	<Slide />
 </Presentation>
 
