@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { blur, fly, scale, slide } from 'svelte/transition'
+	import { blur } from 'svelte/transition'
 	import { Slide, Step } from '@components'
 	import { scrambler } from '@lib/extras'
 

@@ -8,7 +8,7 @@
 	import Utilitarian from './slides/utilitarian.svelte'
 	import Principles from './slides/principles.svelte'
 	import Contrast from './slides/contrast.svelte'
-	import TextColor from './slides/textColor.svelte'
+	import Text from './slides/text.svelte'
 	import Repetition from './slides/repetition.svelte'
 	import Alignment from './slides/alignment.svelte'
 	// import Rules from './slides/rules.svelte'
@@ -29,7 +29,7 @@
 	<Utilitarian />
 	<Principles />
 	<Contrast />
-	<TextColor />
+	<Text />
 	<Repetition />
 	<Alignment />
 	<!-- <Rules /> -->
