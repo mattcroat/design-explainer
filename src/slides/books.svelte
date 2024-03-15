@@ -2,10 +2,9 @@
 	import { fly, slide } from 'svelte/transition'
 	import { cubicInOut } from 'svelte/easing'
 	import { Slide, Step } from '@components'
-	import { signal } from '@motion'
 	import { scrambler } from '@lib/extras'
 
-	let step: 'start' | 'title' | 'books' = 'books'
+	let step: 'start' | 'title' | 'books' = 'start'
 
 	const title1 = scrambler('Refactoring UI')
 	const title2 = scrambler('Design for hackers')

@@ -19,6 +19,7 @@
 	import Color from './slides/color.svelte'
 	import Layout from './slides/layout.svelte'
 	import Books from './slides/books.svelte'
+	import Patreon from './slides/patreon.svelte'
 
 	$options = { outline: true }
 </script>
@@ -39,7 +40,7 @@
 	<Color />
 	<Layout />
 	<Books />
-	<Slide />
+	<Patreon />
 </Presentation>
 
 <!-- <style>
