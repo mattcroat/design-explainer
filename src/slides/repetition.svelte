@@ -9,8 +9,7 @@
 		| 'title'
 		| 'example'
 		| 'example.scroll'
-		| 'example.repetition'
-		| 'end' = 'start'
+		| 'example.repetition' = 'start'
 
 	const line = signal({ y: '128', rotate: 0, opacity: 0 })
 	const page = signal({ opacity: 0 })
@@ -28,7 +27,6 @@
 			await page.to({ opacity: 90 }, { duration: 2000 })
 		}}
 	/>
-	<Step on:in={() => (step = 'end')} />
 
 	{#if step === 'title'}
 		<div class="h-full grid place-items-center">

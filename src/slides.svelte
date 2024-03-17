@@ -4,7 +4,7 @@
 
 	import Intro from './slides/intro.svelte'
 	import Design from './slides/design.svelte'
-	import Art from './slides/art.svelte'
+	// import Art from './slides/art.svelte'
 	import Utilitarian from './slides/utilitarian.svelte'
 	import Principles from './slides/principles.svelte'
 	import Contrast from './slides/contrast.svelte'
@@ -19,7 +19,7 @@
 	import Books from './slides/books.svelte'
 	import Patreon from './slides/patreon.svelte'
 
-	$options = { outline: true }
+	$options = { outline: false }
 </script>
 
 <Presentation>
